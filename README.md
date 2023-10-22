@@ -24,7 +24,7 @@ docker run \
     --device /dev/net/tun \
     --mount="type=bind,source=${CONF_PATH},target=/client.ovpn,readonly" \
     --mount="type=bind,source=${PASS_PATH},target=/client.pass,readonly" \
-  joestldr/openvpn-client:v1.0.0 \
+  joestldr/openvpn-client:latest \
     --config /client.ovpn --auth-user-pass /client.pass --auth-nocache
 ```
 Ref: https://linux.die.net/man/8/openvpn
@@ -45,7 +45,7 @@ docker run \
     --network host \
     --mount="type=bind,source=${CONF_PATH},target=/client.ovpn,readonly" \
     --mount="type=bind,source=${PASS_PATH},target=/client.pass,readonly" \
-  joestldr/openvpn-client:v1.0.0 \
+  joestldr/openvpn-client:latest \
     --config /client.ovpn --auth-user-pass /client.pass --auth-nocache
 ```
 Ref: https://linux.die.net/man/8/openvpn
@@ -73,7 +73,7 @@ docker run \
     --mount="type=bind,source=${PASS_PATH},target=/client.pass,readonly" \
     --env PRE_CONNECT_CHECK_CMD="${PRE_CONNECT_CHECK_CMD}" \
     --env PRE_CONNECT_CHECK_MAX_RETRIES="3" \
-  joestldr/openvpn-client:v1.0.0 \
+  joestldr/openvpn-client:latest \
     --config /client.ovpn --auth-user-pass /client.pass --auth-nocache
 ```
 
