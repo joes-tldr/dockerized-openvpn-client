@@ -18,8 +18,8 @@ docker run \
     --name joestldr-openvpn-client \
     --detach \
     --restart unless-stopped \
-    --dns 8.8.8.8 \
-    --dns 8.8.4.4 \
+    --dns 9.9.9.9 \
+    --dns 149.112.112.112 \
     --cap-add NET_ADMIN \
     --device /dev/net/tun \
     --mount="type=bind,source=${CONF_PATH},target=/client.ovpn,readonly" \
@@ -39,8 +39,8 @@ docker run \
     --name joestldr-openvpn-client \
     --detach \
     --restart unless-stopped \
-    --dns 8.8.8.8 \
-    --dns 8.8.4.4 \
+    --dns 9.9.9.9 \
+    --dns 149.112.112.112 \
     --privileged \
     --network host \
     --mount="type=bind,source=${CONF_PATH},target=/client.ovpn,readonly" \
@@ -49,6 +49,33 @@ docker run \
     --config /client.ovpn --auth-user-pass /client.pass --auth-nocache
 ```
 Ref: https://linux.die.net/man/8/openvpn
+
+## Pre-connect check - Command that should `exit 0` before connecting to VPN
+
+Something like... Wait for internet/intranet/vpn-server to be available?
+
+```bash
+PRE_CONNECT_CHECK_CMD='ping -W 3 -c 4 9.9.9.9'
+#PRE_CONNECT_CHECK_CMD='curl -sf https://google.com'
+
+CONF_PATH="/path/to/client.ovpn"
+PASS_PATH="/path/to/client.pass"
+
+docker run \
+    --name joestldr-openvpn-client \
+    --detach \
+    --restart unless-stopped \
+    --dns 9.9.9.9 \
+    --dns 149.112.112.112 \
+    --cap-add NET_ADMIN \
+    --device /dev/net/tun \
+    --mount="type=bind,source=${CONF_PATH},target=/client.ovpn,readonly" \
+    --mount="type=bind,source=${PASS_PATH},target=/client.pass,readonly" \
+    --env PRE_CONNECT_CHECK_CMD="${PRE_CONNECT_CHECK_CMD}" \
+    --env PRE_CONNECT_CHECK_MAX_RETRIES="3" \
+  joestldr/openvpn-client:v1.0.0 \
+    --config /client.ovpn --auth-user-pass /client.pass --auth-nocache
+```
 
 ## Sample `docker compose` usage:
 
