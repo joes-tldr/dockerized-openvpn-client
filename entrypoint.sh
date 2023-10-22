@@ -4,7 +4,7 @@ if [ ! -z "${PRE_CONNECT_CHECK_CMD}" ]; then
   pre_check() {
     echo 'Checking if internet is available...' 1>&2
     echo "PRE_CONNECT_CHECK_CMD = ${PRE_CONNECT_CHECK_CMD}" 1>&2
-    ${PRE_CONNECT_CHECK_CMD} 1>&2 && echo '0' || echo '1'
+    sh -c "${PRE_CONNECT_CHECK_CMD}" 1>&2 && echo '0' || echo '1'
   }
   [ -z "${PRE_CONNECT_CHECK_MAX_RETRIES}" ] && PRE_CONNECT_CHECK_MAX_RETRIES=3
   RETRIES=0

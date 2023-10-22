@@ -32,7 +32,7 @@ test-run: build
 			--device /dev/net/tun \
 			--mount="type=bind,source=./test/client.ovpn,target=/client.ovpn,readonly" \
 			--mount="type=bind,source=./test/client.pass,target=/client.pass,readonly" \
-			--env PRE_CONNECT_CHECK_CMD="ping -W 3 -c 4 9.9.9.9" \
-			--env PRE_CONNECT_CHECK_MAX_RETRIES="3" \
+			--env PRE_CONNECT_CHECK_CMD='ping -W 3 -c 4 9.9.9.9 && ping -W 3 -c 4 149.112.112.112' \
+			--env PRE_CONNECT_CHECK_MAX_RETRIES='3' \
 		$(IMAGE) \
 			--config /client.ovpn --auth-user-pass /client.pass --auth-nocache

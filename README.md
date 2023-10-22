@@ -55,7 +55,7 @@ Ref: https://linux.die.net/man/8/openvpn
 Something like... Wait for internet/intranet/vpn-server to be available?
 
 ```bash
-PRE_CONNECT_CHECK_CMD='ping -W 3 -c 4 9.9.9.9'
+PRE_CONNECT_CHECK_CMD='ping -W 3 -c 4 9.9.9.9 && ping -W 3 -c 4 149.112.112.112'
 #PRE_CONNECT_CHECK_CMD='curl -sf https://google.com'
 
 CONF_PATH="/path/to/client.ovpn"
